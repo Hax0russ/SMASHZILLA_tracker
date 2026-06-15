@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SmashZilla">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<title>SmashZilla Cash</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
+  html, body { margin: 0; padding: 0; background: #0a0a0a; color: #fff;
+    font-family: -apple-system, system-ui, sans-serif; overscroll-behavior: none; }
+  .wrap { max-width: 680px; margin: 0 auto; min-height: 100vh;
+    padding: max(20px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom));
+    display: flex; flex-direction: column; }
+  .head { display: flex; justify-content: space-between; align-items: baseline; }
+  .brand { color: #22c55e; font-weight: 800; letter-spacing: .5px; font-size: 17px; }
+  .items-label { color: #71717a; font-size: 14px; }
+  .total { font-size: 60px; font-weight: 800; font-variant-numeric: tabular-nums; margin: 4px 0 18px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .btn { border: none; border-radius: 18px; padding: 26px 16px; text-align: left;
+    position: relative; transition: transform .05s; cursor: pointer; }
+  .btn:active { transform: scale(.95); }
+  .btn.grey { background: #27272a; color: #fff; }
+  .btn.green { background: #22c55e; color: #0a0a0a; }
+  .btn .name { font-size: 20px; font-weight: 700; line-height: 1.1; }
+  .btn .price { font-size: 16px; font-weight: 600; margin-top: 2px; }
+  .btn.grey .price { color: #a1a1aa; }
+  .btn.green .price { color: #166534; }
+  .badge { position: absolute; top: 12px; right: 12px; min-width: 32px; height: 32px;
+    padding: 0 8px; border-radius: 999px; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px; }
+  .btn.grey .badge { background: #22c55e; color: #0a0a0a; }
+  .btn.green .badge { background: #0a0a0a; color: #22c55e; }
+  .actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .act { border: none; background: #27272a; color: #fff; border-radius: 14px; padding: 16px 8px;
+    display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; transition: transform .05s; }
+  .act:active { transform: scale(.95); }
+  .act:disabled { opacity: .3; }
+  .act .ico { font-size: 22px; }
+  .act .lbl { font-size: 12px; color: #a1a1aa; }
+  .spacer { flex: 1; }
+  /* summary */
+  .panel { background: #18181b; border-radius: 18px; padding: 20px; flex: 1; }
+  .row { display: flex; justify-content: space-between; font-size: 18px; padding: 6px 0; }
+  .row .q { color: #71717a; }
+  .row .amt { font-variant-numeric: tabular-nums; font-weight: 600; }
+  .grand { border-top: 1px solid #3f3f46; margin-top: 12px; padding-top: 14px;
+    font-size: 24px; font-weight: 800; }
+  .grand .amt { color: #22c55e; }
+  .empty { color: #71717a; text-align: center; padding: 40px 0; }
+  .sumacts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .primary { background: #22c55e; color: #0a0a0a; font-weight: 700; border: none; border-radius: 14px; padding: 16px; cursor: pointer; }
+  .ghost { background: #27272a; color: #fff; font-weight: 700; border: none; border-radius: 14px; padding: 16px; cursor: pointer; }
+  /* modal */
+  .modal { position: fixed; inset: 0; background: rgba(0,0,0,.75); display: none;
+    align-items: center; justify-content: center; padding: 24px; z-index: 10; }
+  .modal.show { display: flex; }
+  .card { background: #18181b; border-radius: 18px; padding: 24px; max-width: 360px; width: 100%; }
+  .card h2 { margin: 0 0 8px; font-size: 20px; }
+  .card p { color: #a1a1aa; margin: 0 0 20px; }
+  .card .mb { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .keep { background: #3f3f46; color: #fff; border: none; border-radius: 12px; padding: 14px; font-weight: 700; cursor: pointer; }
+  .clear { background: #ef4444; color: #fff; border: none; border-radius: 12px; padding: 14px; font-weight: 700; cursor: pointer; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <span class="brand">SMASHZILLA · CASH</span>
+    <span class="items-label"><span id="itemCount">0</span> items</span>
+  </div>
+  <div class="total">$<span id="total">0.00</span></div>
+
+  <div id="logView">
+    <div class="grid" id="grid"></div>
+    <div class="actions">
+      <button class="act" id="undoBtn"><span class="ico">&#8634;</span><span class="lbl" id="undoLbl">Undo</span></button>
+      <button class="act" id="summaryBtn"><span class="ico">&#9776;</span><span class="lbl">Summary</span></button>
+      <button class="act" id="resetBtn"><span class="ico">&#10227;</span><span class="lbl">New event</span></button>
+    </div>
+  </div>
+
+  <div id="summaryView" class="hidden" style="display:flex;flex-direction:column;flex:1;">
+    <div class="panel" id="summaryPanel"></div>
+    <div class="sumacts">
+      <button class="primary" id="copyBtn">Copy summary</button>
+      <button class="ghost" id="backBtn">Back to tracker</button>
+    </div>
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="card">
+    <h2>Start a new event?</h2>
+    <p id="modalText"></p>
+    <div class="mb">
+      <button class="keep" id="keepBtn">Keep</button>
+      <button class="clear" id="clearBtn">Clear</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  var MENU = [
+    { id: "classic_single", name: "Classic Single", price: 11.00, hero: false },
+    { id: "classic_double", name: "Classic Double", price: 14.00, hero: false },
+    { id: "zilla_single",  name: "SmashZilla Single", price: 11.50, hero: true },
+    { id: "zilla_double",  name: "SmashZilla Double", price: 14.50, hero: true }
+  ];
+  var KEY = "smashzilla-cash-tracker";
+  var log = [];
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (raw) { var p = JSON.parse(raw); if (Array.isArray(p.log)) log = p.log; }
+    } catch (e) {}
+  }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify({ log: log })); } catch (e) {}
+  }
+  function total() { return log.reduce(function(s,e){return s+e.price;},0); }
+  function qty(id) { return log.filter(function(e){return e.item===id;}).length; }
+
+  function render() {
+    document.getElementById("total").textContent = total().toFixed(2);
+    document.getElementById("itemCount").textContent = log.length;
+    var grid = document.getElementById("grid");
+    grid.innerHTML = "";
+    MENU.forEach(function(m){
+      var q = qty(m.id);
+      var b = document.createElement("button");
+      b.className = "btn " + (m.hero ? "green" : "grey");
+      b.innerHTML = '<div class="name">'+m.name+'</div><div class="price">$'+m.price.toFixed(2)+'</div>'
+        + (q>0 ? '<div class="badge">'+q+'</div>' : '');
+      b.onclick = function(){ addItem(m); };
+      grid.appendChild(b);
+    });
+    var undoBtn = document.getElementById("undoBtn");
+    undoBtn.disabled = log.length === 0;
+    var last = log[log.length-1];
+    document.getElementById("undoLbl").textContent = last ? ("Undo " + last.name.split(" ")[0]) : "Undo";
+  }
+
+  function addItem(m) {
+    log.push({ item: m.id, name: m.name, price: m.price, time: Date.now() });
+    save(); render();
+  }
+  function undo() { if (log.length) { log.pop(); save(); render(); } }
+
+  function showSummary() {
+    var panel = document.getElementById("summaryPanel");
+    var rows = MENU.filter(function(m){return qty(m.id)>0;});
+    if (!rows.length) { panel.innerHTML = '<div class="empty">No cash sales logged yet.</div>'; }
+    else {
+      var html = "";
+      rows.forEach(function(m){
+        var q = qty(m.id);
+        html += '<div class="row"><span>'+m.name+' <span class="q">x'+q+'</span></span>'
+              + '<span class="amt">$'+(q*m.price).toFixed(2)+'</span></div>';
+      });
+      html += '<div class="row grand"><span>Total</span><span class="amt">$'+total().toFixed(2)+'</span></div>';
+      panel.innerHTML = html;
+    }
+    document.getElementById("logView").classList.add("hidden");
+    document.getElementById("summaryView").classList.remove("hidden");
+  }
+  function backToLog() {
+    document.getElementById("summaryView").classList.add("hidden");
+    document.getElementById("logView").classList.remove("hidden");
+  }
+
+  function summaryText() {
+    var lines = ["SmashZilla - Cash Takings", new Date().toLocaleString(), ""];
+    MENU.forEach(function(m){ var q=qty(m.id); if(q>0) lines.push(m.name+"  x"+q+"  =  $"+(q*m.price).toFixed(2)); });
+    lines.push(""); lines.push("Items: "+log.length); lines.push("CASH TOTAL: $"+total().toFixed(2));
+    return lines.join("\n");
+  }
+  function copySummary() {
+    var t = summaryText();
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(t).then(function(){ flash(); }, function(){ legacyCopy(t); });
+    } else { legacyCopy(t); }
+  }
+  function legacyCopy(t){
+    var ta=document.createElement("textarea"); ta.value=t; document.body.appendChild(ta);
+    ta.select(); try{document.execCommand("copy");}catch(e){} document.body.removeChild(ta); flash();
+  }
+  function flash(){
+    var b=document.getElementById("copyBtn"); var o=b.textContent;
+    b.textContent="Copied!"; setTimeout(function(){b.textContent=o;},1800);
+  }
+
+  function openModal(){
+    document.getElementById("modalText").textContent =
+      "This clears the current tally ($"+total().toFixed(2)+", "+log.length+" items). Copy your summary first if you need it.";
+    document.getElementById("modal").classList.add("show");
+  }
+  function closeModal(){ document.getElementById("modal").classList.remove("show"); }
+  function doReset(){ log=[]; save(); render(); closeModal(); backToLog(); }
+
+  document.getElementById("undoBtn").onclick = undo;
+  document.getElementById("summaryBtn").onclick = showSummary;
+  document.getElementById("resetBtn").onclick = openModal;
+  document.getElementById("copyBtn").onclick = copySummary;
+  document.getElementById("backBtn").onclick = backToLog;
+  document.getElementById("keepBtn").onclick = closeModal;
+  document.getElementById("clearBtn").onclick = doReset;
+
+  load(); render();
+</script>
+</body>
+</html>
