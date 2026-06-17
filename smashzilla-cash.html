@@ -74,6 +74,15 @@
   .hidden { display:none; }
   .toast { position:fixed; left:50%; bottom:30px; transform:translateX(-50%); background:#22c55e; color:#0a0a0a; font-weight:800; padding:12px 20px; border-radius:999px; opacity:0; transition:opacity .2s; z-index:20; pointer-events:none; }
   .toast.show { opacity:1; }
+  .changebar { margin-top:10px; }
+  .changebtn { width:100%; background:#334155; color:#fff; border:none; border-radius:12px; padding:13px; font-weight:700; font-size:15px; cursor:pointer; text-align:left; }
+  .changebtn:active { transform:scale(.97); }
+  .changeinput { display:none; margin-top:8px; background:#27272a; border-radius:12px; padding:12px; }
+  .changeinput.show { display:block; }
+  .changeinput label { font-size:12px; color:#a1a1aa; font-weight:600; letter-spacing:.5px; display:block; margin-bottom:6px; }
+  .changeinput input { width:100%; padding:10px 12px; border-radius:8px; border:1px solid #3f3f46; background:#0a0a0a; color:#fff; font-size:20px; font-weight:700; font-variant-numeric:tabular-nums; -webkit-user-select:text; user-select:text; }
+  .changeresult { margin-top:10px; font-size:15px; color:#a1a1aa; }
+  .changeresult .camount { font-size:26px; font-weight:800; color:#22c55e; font-variant-numeric:tabular-nums; }
 </style>
 </head>
 <body>
@@ -92,6 +101,14 @@
       <div class="cartbtns">
         <button class="undo" id="undoBtn">Undo</button>
         <button class="finish" id="finishBtn">Finish transaction</button>
+      </div>
+      <div class="changebar">
+        <button class="changebtn" id="changeToggle">💵 Calculate Change</button>
+        <div class="changeinput" id="changeBox">
+          <label>AMOUNT GIVEN BY CUSTOMER</label>
+          <input type="number" id="givenInput" inputmode="decimal" placeholder="0.00" min="0" step="0.50">
+          <div class="changeresult" id="changeResult"></div>
+        </div>
       </div>
     </div>
 
@@ -153,6 +170,8 @@
 <div class="toast" id="toast"></div>
 
 <script>
+  var ABBREV = { "Classic Single":"CS", "Classic Double":"CD", "SmashZilla Single":"SZ", "SmashZilla Double":"DZ" };
+
   var BURGERS = [
     { name:"Classic Single",    price:11.50, hero:false },
     { name:"Classic Double",    price:13.50, hero:false },
@@ -245,13 +264,19 @@
     var order = { order:state.counter, time:Date.now(), items:state.cart.slice(), total:cartTotal() };
     state.orders.push(order);
     state.cart = [];
+    document.getElementById("changeBox").classList.remove("show");
+    document.getElementById("givenInput").value="";
+    document.getElementById("changeResult").innerHTML="";
     save(); render();
     toast("Order #"+order.order+" banked");
     postOrders([orderPayload(order)]);
   }
 
   function itemsString(items){
-    return aggregate(items).map(function(a){ return a.qty+"\u00d7 "+a.name; }).join(", ");
+    return aggregate(items).map(function(a){
+      var abbr = ABBREV[a.name];
+      return a.qty+"\u00d7 "+(abbr || a.name);
+    }).join(", ");
   }
   function orderPayload(o){
     return { order:o.order, time:new Date(o.time).toLocaleString(), items:itemsString(o.items), count:o.items.length, total:o.total.toFixed(2) };
@@ -311,6 +336,22 @@
 
   var toastT;
   function toast(msg){ var t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(function(){t.classList.remove("show");},1600); }
+
+  document.getElementById("changeToggle").onclick=function(){
+    var box=document.getElementById("changeBox");
+    var isOpen=box.classList.toggle("show");
+    if(isOpen){ document.getElementById("givenInput").focus(); }
+    else { document.getElementById("givenInput").value=""; document.getElementById("changeResult").innerHTML=""; }
+  };
+  document.getElementById("givenInput").addEventListener("input",function(){
+    var given=parseFloat(this.value);
+    var total=cartTotal();
+    var el=document.getElementById("changeResult");
+    if(isNaN(given)||given<0){ el.innerHTML=""; return; }
+    var change=given-total;
+    if(change<0){ el.innerHTML='<span style="color:#ef4444;font-weight:700;">Not enough — short by $'+Math.abs(change).toFixed(2)+'</span>'; }
+    else { el.innerHTML='Change to give: <span class="camount">$'+change.toFixed(2)+'</span>'; }
+  });
 
   document.getElementById("undoBtn").onclick=undo;
   document.getElementById("finishBtn").onclick=finish;
