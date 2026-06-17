@@ -11,77 +11,103 @@
 <title>SmashZilla Cash</title>
 <style>
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; }
-  html, body { margin: 0; padding: 0; background: #0a0a0a; color: #fff;
-    font-family: -apple-system, system-ui, sans-serif; overscroll-behavior: none; }
-  .wrap { max-width: 680px; margin: 0 auto; min-height: 100vh;
-    padding: max(20px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom));
-    display: flex; flex-direction: column; }
-  .head { display: flex; justify-content: space-between; align-items: baseline; }
-  .brand { color: #22c55e; font-weight: 800; letter-spacing: .5px; font-size: 17px; }
-  .items-label { color: #71717a; font-size: 14px; }
-  .total { font-size: 60px; font-weight: 800; font-variant-numeric: tabular-nums; margin: 4px 0 18px; }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .btn { border: none; border-radius: 18px; padding: 26px 16px; text-align: left;
-    position: relative; transition: transform .05s; cursor: pointer; }
-  .btn:active { transform: scale(.95); }
-  .btn.grey { background: #27272a; color: #fff; }
-  .btn.green { background: #22c55e; color: #0a0a0a; }
-  .btn .name { font-size: 20px; font-weight: 700; line-height: 1.1; }
-  .btn .price { font-size: 16px; font-weight: 600; margin-top: 2px; }
-  .btn.grey .price { color: #a1a1aa; }
-  .btn.green .price { color: #166534; }
-  .badge { position: absolute; top: 12px; right: 12px; min-width: 32px; height: 32px;
-    padding: 0 8px; border-radius: 999px; display: flex; align-items: center; justify-content: center;
-    font-weight: 800; font-size: 16px; }
-  .btn.grey .badge { background: #22c55e; color: #0a0a0a; }
-  .btn.green .badge { background: #0a0a0a; color: #22c55e; }
-  .actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 16px; }
-  .act { border: none; background: #27272a; color: #fff; border-radius: 14px; padding: 16px 8px;
-    display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; transition: transform .05s; }
-  .act:active { transform: scale(.95); }
-  .act:disabled { opacity: .3; }
-  .act .ico { font-size: 22px; }
-  .act .lbl { font-size: 12px; color: #a1a1aa; }
-  .spacer { flex: 1; }
-  /* summary */
-  .panel { background: #18181b; border-radius: 18px; padding: 20px; flex: 1; }
-  .row { display: flex; justify-content: space-between; font-size: 18px; padding: 6px 0; }
-  .row .q { color: #71717a; }
-  .row .amt { font-variant-numeric: tabular-nums; font-weight: 600; }
-  .grand { border-top: 1px solid #3f3f46; margin-top: 12px; padding-top: 14px;
-    font-size: 24px; font-weight: 800; }
-  .grand .amt { color: #22c55e; }
-  .empty { color: #71717a; text-align: center; padding: 40px 0; }
-  .sumacts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
-  .primary { background: #22c55e; color: #0a0a0a; font-weight: 700; border: none; border-radius: 14px; padding: 16px; cursor: pointer; }
-  .ghost { background: #27272a; color: #fff; font-weight: 700; border: none; border-radius: 14px; padding: 16px; cursor: pointer; }
-  /* modal */
-  .modal { position: fixed; inset: 0; background: rgba(0,0,0,.75); display: none;
-    align-items: center; justify-content: center; padding: 24px; z-index: 10; }
-  .modal.show { display: flex; }
-  .card { background: #18181b; border-radius: 18px; padding: 24px; max-width: 360px; width: 100%; }
-  .card h2 { margin: 0 0 8px; font-size: 20px; }
-  .card p { color: #a1a1aa; margin: 0 0 20px; }
-  .card .mb { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .keep { background: #3f3f46; color: #fff; border: none; border-radius: 12px; padding: 14px; font-weight: 700; cursor: pointer; }
-  .clear { background: #ef4444; color: #fff; border: none; border-radius: 12px; padding: 14px; font-weight: 700; cursor: pointer; }
-  .hidden { display: none; }
+  html, body { margin:0; padding:0; background:#0a0a0a; color:#fff; font-family:-apple-system,system-ui,sans-serif; overscroll-behavior:none; }
+  .wrap { max-width:720px; margin:0 auto; min-height:100vh; padding:max(16px,env(safe-area-inset-top)) 14px max(16px,env(safe-area-inset-bottom)); display:flex; flex-direction:column; }
+  .head { display:flex; justify-content:space-between; align-items:center; }
+  .brand { color:#22c55e; font-weight:800; letter-spacing:.5px; font-size:16px; }
+  .gear { background:#27272a; border:none; color:#a1a1aa; width:38px; height:38px; border-radius:10px; font-size:18px; cursor:pointer; }
+  .daytotal { font-size:46px; font-weight:800; font-variant-numeric:tabular-nums; margin:2px 0 0; }
+  .daysub { color:#71717a; font-size:13px; margin-bottom:12px; }
+  /* current order */
+  .cart { background:#18181b; border:1px solid #27272a; border-radius:16px; padding:14px; margin-bottom:12px; }
+  .cart .ct { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+  .cart .ct h3 { margin:0; font-size:14px; color:#a1a1aa; font-weight:600; }
+  .cart .ct .sub { font-size:20px; font-weight:800; font-variant-numeric:tabular-nums; }
+  .line { display:flex; justify-content:space-between; align-items:center; padding:6px 0; font-size:16px; }
+  .line .x { background:#3f3f46; border:none; color:#fff; width:28px; height:28px; border-radius:8px; font-size:15px; cursor:pointer; margin-left:10px; }
+  .line .ln { flex:1; }
+  .line .lp { font-variant-numeric:tabular-nums; color:#a1a1aa; margin-left:8px; }
+  .cartempty { color:#52525b; font-size:14px; padding:6px 0; }
+  .cartbtns { display:grid; grid-template-columns:1fr 2fr; gap:10px; margin-top:10px; }
+  .undo { background:#3f3f46; color:#fff; border:none; border-radius:12px; padding:14px; font-weight:700; font-size:15px; cursor:pointer; }
+  .undo:disabled, .finish:disabled { opacity:.3; }
+  .finish { background:#22c55e; color:#0a0a0a; border:none; border-radius:12px; padding:14px; font-weight:800; font-size:16px; cursor:pointer; }
+  .finish:active, .undo:active { transform:scale(.97); }
+  .sectlabel { color:#52525b; font-size:12px; font-weight:700; letter-spacing:1px; margin:4px 2px 8px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .btn { border:none; border-radius:16px; padding:20px 14px; text-align:left; position:relative; cursor:pointer; transition:transform .05s; }
+  .btn:active { transform:scale(.95); }
+  .btn.grey { background:#27272a; color:#fff; }
+  .btn.green { background:#22c55e; color:#0a0a0a; }
+  .btn.drink { background:#334155; color:#fff; }
+  .btn .name { font-size:17px; font-weight:700; line-height:1.1; }
+  .btn .price { font-size:14px; font-weight:600; margin-top:2px; }
+  .btn.grey .price { color:#a1a1aa; } .btn.green .price { color:#166534; } .btn.drink .price { color:#94a3b8; }
+  .combobar { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px; }
+  .seg { border:none; border-radius:12px; padding:12px; font-weight:700; font-size:14px; cursor:pointer; background:#27272a; color:#a1a1aa; }
+  .seg.on { background:#22c55e; color:#0a0a0a; }
+  .actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+  .act { border:none; background:#27272a; color:#fff; border-radius:14px; padding:15px; font-weight:700; cursor:pointer; }
+  .act:active { transform:scale(.97); }
+  .spacer { flex:1; }
+  /* summary + modal */
+  .panel { background:#18181b; border-radius:16px; padding:18px; flex:1; overflow:auto; }
+  .row { display:flex; justify-content:space-between; font-size:17px; padding:5px 0; }
+  .row .q { color:#71717a; }
+  .row .amt { font-variant-numeric:tabular-nums; font-weight:600; }
+  .grand { border-top:1px solid #3f3f46; margin-top:10px; padding-top:12px; font-size:22px; font-weight:800; }
+  .grand .amt { color:#22c55e; }
+  .empty { color:#71717a; text-align:center; padding:36px 0; }
+  .sumacts { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+  .primary { background:#22c55e; color:#0a0a0a; font-weight:800; border:none; border-radius:14px; padding:15px; cursor:pointer; }
+  .ghost { background:#27272a; color:#fff; font-weight:700; border:none; border-radius:14px; padding:15px; cursor:pointer; }
+  .modal { position:fixed; inset:0; background:rgba(0,0,0,.78); display:none; align-items:center; justify-content:center; padding:22px; z-index:10; }
+  .modal.show { display:flex; }
+  .card { background:#18181b; border-radius:18px; padding:22px; max-width:380px; width:100%; }
+  .card h2 { margin:0 0 8px; font-size:19px; }
+  .card p { color:#a1a1aa; margin:0 0 16px; font-size:14px; }
+  .card input { width:100%; padding:12px; border-radius:10px; border:1px solid #3f3f46; background:#0a0a0a; color:#fff; font-size:14px; margin-bottom:14px; }
+  .mb { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .keep { background:#3f3f46; color:#fff; border:none; border-radius:12px; padding:13px; font-weight:700; cursor:pointer; }
+  .clear { background:#ef4444; color:#fff; border:none; border-radius:12px; padding:13px; font-weight:700; cursor:pointer; }
+  .status { font-size:12px; margin-bottom:12px; }
+  .hidden { display:none; }
+  .toast { position:fixed; left:50%; bottom:30px; transform:translateX(-50%); background:#22c55e; color:#0a0a0a; font-weight:800; padding:12px 20px; border-radius:999px; opacity:0; transition:opacity .2s; z-index:20; pointer-events:none; }
+  .toast.show { opacity:1; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="head">
-    <span class="brand">SMASHZILLA · CASH</span>
-    <span class="items-label"><span id="itemCount">0</span> items</span>
+    <span class="brand">SMASHZILLA &middot; CASH</span>
+    <button class="gear" id="gearBtn">&#9881;</button>
   </div>
-  <div class="total">$<span id="total">0.00</span></div>
+  <div class="daytotal">$<span id="dayTotal">0.00</span></div>
+  <div class="daysub"><span id="orderCount">0</span> orders &middot; <span id="itemCount">0</span> items today</div>
 
   <div id="logView">
-    <div class="grid" id="grid"></div>
+    <div class="cart">
+      <div class="ct"><h3>CURRENT ORDER</h3><span class="sub">$<span id="cartSub">0.00</span></span></div>
+      <div id="cartLines"></div>
+      <div class="cartbtns">
+        <button class="undo" id="undoBtn">Undo</button>
+        <button class="finish" id="finishBtn">Finish transaction</button>
+      </div>
+    </div>
+
+    <div class="sectlabel">BURGERS</div>
+    <div class="grid" id="burgerGrid"></div>
+
+    <div class="sectlabel" style="margin-top:14px;">DRINKS</div>
+    <div class="combobar">
+      <button class="seg on" id="segStd">Standard $3.50</button>
+      <button class="seg" id="segCombo">Combo $2.50</button>
+    </div>
+    <div class="grid" id="drinkGrid"></div>
+
     <div class="actions">
-      <button class="act" id="undoBtn"><span class="ico">&#8634;</span><span class="lbl" id="undoLbl">Undo</span></button>
-      <button class="act" id="summaryBtn"><span class="ico">&#9776;</span><span class="lbl">Summary</span></button>
-      <button class="act" id="resetBtn"><span class="ico">&#10227;</span><span class="lbl">New event</span></button>
+      <button class="act" id="summaryBtn">Summary</button>
+      <button class="act" id="resetBtn">New event</button>
     </div>
   </div>
 
@@ -89,12 +115,16 @@
     <div class="panel" id="summaryPanel"></div>
     <div class="sumacts">
       <button class="primary" id="copyBtn">Copy summary</button>
+      <button class="ghost" id="pushBtn">Push all to Sheets</button>
+    </div>
+    <div class="sumacts" style="grid-template-columns:1fr;">
       <button class="ghost" id="backBtn">Back to tracker</button>
     </div>
   </div>
   <div class="spacer"></div>
 </div>
 
+<!-- reset modal -->
 <div class="modal" id="modal">
   <div class="card">
     <h2>Start a new event?</h2>
@@ -106,112 +136,196 @@
   </div>
 </div>
 
+<!-- settings modal -->
+<div class="modal" id="settings">
+  <div class="card">
+    <h2>Google Sheets link</h2>
+    <p>Paste your Apps Script Web App URL. Orders auto-send when you finish a transaction. Leave blank to track on-device only.</p>
+    <input id="urlInput" type="url" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <div class="status" id="connStatus"></div>
+    <div class="mb">
+      <button class="keep" id="settingsCancel">Cancel</button>
+      <button class="primary" id="settingsSave">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script>
-  var MENU = [
-    { id: "classic_single", name: "Classic Single", price: 11.50, hero: false },
-    { id: "classic_double", name: "Classic Double", price: 13.50, hero: false },
-    { id: "zilla_single",  name: "SmashZilla Single", price: 12.50, hero: true },
-    { id: "zilla_double",  name: "SmashZilla Double", price: 14.50, hero: true }
+  var BURGERS = [
+    { name:"Classic Single",    price:11.50, hero:false },
+    { name:"Classic Double",    price:13.50, hero:false },
+    { name:"SmashZilla Single", price:12.50, hero:true  },
+    { name:"SmashZilla Double", price:14.50, hero:true  }
   ];
-  var KEY = "smashzilla-cash-tracker";
-  var log = [];
+  var DRINKS = [ "Cola", "Zero Cola", "Solo", "Zero Solo" ];
+  var DRINK_STD = 3.50, DRINK_COMBO = 2.50;
+
+  var KEY = "smashzilla-cash-v2";
+  var URLKEY = "smashzilla-sheet-url";
+  var state = { orders:[], cart:[], counter:0 };
+  var comboMode = false;
+  var sheetUrl = "";
 
   function load() {
-    try {
-      var raw = localStorage.getItem(KEY);
-      if (raw) { var p = JSON.parse(raw); if (Array.isArray(p.log)) log = p.log; }
-    } catch (e) {}
+    try { var r = localStorage.getItem(KEY); if (r) { var p=JSON.parse(r);
+      if(p.orders) state.orders=p.orders; if(p.cart) state.cart=p.cart; if(p.counter) state.counter=p.counter; } } catch(e){}
+    try { sheetUrl = localStorage.getItem(URLKEY) || ""; } catch(e){}
   }
-  function save() {
-    try { localStorage.setItem(KEY, JSON.stringify({ log: log })); } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
+
+  function dispName(it){ return it.name + (it.combo ? " (combo)" : ""); }
+  function cartTotal(){ return state.cart.reduce(function(s,i){return s+i.price;},0); }
+  function dayTotal(){ return state.orders.reduce(function(s,o){return s+o.total;},0); }
+  function dayItems(){ return state.orders.reduce(function(s,o){return s+o.items.length;},0); }
+
+  function aggregate(items){
+    var map = {};
+    items.forEach(function(it){
+      var k = dispName(it)+"|"+it.price;
+      if(!map[k]) map[k]={ name:dispName(it), price:it.price, qty:0 };
+      map[k].qty++;
+    });
+    return Object.keys(map).map(function(k){return map[k];});
   }
-  function total() { return log.reduce(function(s,e){return s+e.price;},0); }
-  function qty(id) { return log.filter(function(e){return e.item===id;}).length; }
 
   function render() {
-    document.getElementById("total").textContent = total().toFixed(2);
-    document.getElementById("itemCount").textContent = log.length;
-    var grid = document.getElementById("grid");
-    grid.innerHTML = "";
-    MENU.forEach(function(m){
-      var q = qty(m.id);
-      var b = document.createElement("button");
-      b.className = "btn " + (m.hero ? "green" : "grey");
-      b.innerHTML = '<div class="name">'+m.name+'</div><div class="price">$'+m.price.toFixed(2)+'</div>'
-        + (q>0 ? '<div class="badge">'+q+'</div>' : '');
-      b.onclick = function(){ addItem(m); };
-      grid.appendChild(b);
+    document.getElementById("dayTotal").textContent = dayTotal().toFixed(2);
+    document.getElementById("orderCount").textContent = state.orders.length;
+    document.getElementById("itemCount").textContent = dayItems();
+    document.getElementById("cartSub").textContent = cartTotal().toFixed(2);
+
+    // cart
+    var cl = document.getElementById("cartLines"); cl.innerHTML = "";
+    if(state.cart.length===0){ cl.innerHTML = '<div class="cartempty">No items yet \u2014 tap below to add.</div>'; }
+    else {
+      aggregate(state.cart).forEach(function(a){
+        var d=document.createElement("div"); d.className="line";
+        d.innerHTML = '<span class="ln">'+a.name+' <span class="q">\u00d7'+a.qty+'</span></span>'
+          + '<span class="lp">$'+(a.qty*a.price).toFixed(2)+'</span>'
+          + '<button class="x">\u2212</button>';
+        d.querySelector(".x").onclick = function(){ removeOne(a.name, a.price); };
+        cl.appendChild(d);
+      });
+    }
+    document.getElementById("undoBtn").disabled = state.cart.length===0;
+    document.getElementById("finishBtn").disabled = state.cart.length===0;
+
+    // burgers
+    var bg=document.getElementById("burgerGrid"); bg.innerHTML="";
+    BURGERS.forEach(function(m){
+      var b=document.createElement("button"); b.className="btn "+(m.hero?"green":"grey");
+      b.innerHTML='<div class="name">'+m.name+'</div><div class="price">$'+m.price.toFixed(2)+'</div>';
+      b.onclick=function(){ addBurger(m); }; bg.appendChild(b);
     });
-    var undoBtn = document.getElementById("undoBtn");
-    undoBtn.disabled = log.length === 0;
-    var last = log[log.length-1];
-    document.getElementById("undoLbl").textContent = last ? ("Undo " + last.name.split(" ")[0]) : "Undo";
+    // drinks
+    var dg=document.getElementById("drinkGrid"); dg.innerHTML="";
+    var dp = comboMode?DRINK_COMBO:DRINK_STD;
+    DRINKS.forEach(function(n){
+      var b=document.createElement("button"); b.className="btn drink";
+      b.innerHTML='<div class="name">'+n+'</div><div class="price">$'+dp.toFixed(2)+(comboMode?" combo":"")+'</div>';
+      b.onclick=function(){ addDrink(n); }; dg.appendChild(b);
+    });
+    document.getElementById("segStd").className = "seg"+(comboMode?"":" on");
+    document.getElementById("segCombo").className = "seg"+(comboMode?" on":"");
   }
 
-  function addItem(m) {
-    log.push({ item: m.id, name: m.name, price: m.price, time: Date.now() });
+  function addBurger(m){ state.cart.push({ name:m.name, price:m.price, kind:"burger" }); save(); render(); }
+  function addDrink(n){ state.cart.push({ name:n, price:comboMode?DRINK_COMBO:DRINK_STD, combo:comboMode, kind:"drink" }); save(); render(); }
+  function undo(){ if(state.cart.length){ state.cart.pop(); save(); render(); } }
+  function removeOne(name, price){
+    for(var i=state.cart.length-1;i>=0;i--){ if(dispName(state.cart[i])===name && state.cart[i].price===price){ state.cart.splice(i,1); break; } }
     save(); render();
   }
-  function undo() { if (log.length) { log.pop(); save(); render(); } }
 
-  function showSummary() {
-    var panel = document.getElementById("summaryPanel");
-    var rows = MENU.filter(function(m){return qty(m.id)>0;});
-    if (!rows.length) { panel.innerHTML = '<div class="empty">No cash sales logged yet.</div>'; }
+  function finish(){
+    if(state.cart.length===0) return;
+    state.counter++;
+    var order = { order:state.counter, time:Date.now(), items:state.cart.slice(), total:cartTotal() };
+    state.orders.push(order);
+    state.cart = [];
+    save(); render();
+    toast("Order #"+order.order+" banked");
+    postOrders([orderPayload(order)]);
+  }
+
+  function itemsString(items){
+    return aggregate(items).map(function(a){ return a.qty+"\u00d7 "+a.name; }).join(", ");
+  }
+  function orderPayload(o){
+    return { order:o.order, time:new Date(o.time).toLocaleString(), items:itemsString(o.items), count:o.items.length, total:o.total.toFixed(2) };
+  }
+
+  function postOrders(payloadArr){
+    if(!sheetUrl) return;
+    try {
+      fetch(sheetUrl, { method:"POST", mode:"no-cors", headers:{ "Content-Type":"text/plain;charset=utf-8" }, body:JSON.stringify(payloadArr) }).catch(function(){});
+    } catch(e){}
+  }
+
+  function showSummary(){
+    var panel=document.getElementById("summaryPanel");
+    var allItems=[]; state.orders.forEach(function(o){ allItems=allItems.concat(o.items); });
+    var rows=aggregate(allItems).sort(function(a,b){ return a.name<b.name?-1:1; });
+    if(rows.length===0){ panel.innerHTML='<div class="empty">No orders finished yet.</div>'; }
     else {
-      var html = "";
-      rows.forEach(function(m){
-        var q = qty(m.id);
-        html += '<div class="row"><span>'+m.name+' <span class="q">x'+q+'</span></span>'
-              + '<span class="amt">$'+(q*m.price).toFixed(2)+'</span></div>';
-      });
-      html += '<div class="row grand"><span>Total</span><span class="amt">$'+total().toFixed(2)+'</span></div>';
-      panel.innerHTML = html;
+      var h='<div class="row" style="color:#71717a;font-size:13px;"><span>'+state.orders.length+' orders</span><span>'+dayItems()+' items</span></div>';
+      rows.forEach(function(a){ h+='<div class="row"><span>'+a.name+' <span class="q">\u00d7'+a.qty+'</span></span><span class="amt">$'+(a.qty*a.price).toFixed(2)+'</span></div>'; });
+      h+='<div class="row grand"><span>Total</span><span class="amt">$'+dayTotal().toFixed(2)+'</span></div>';
+      panel.innerHTML=h;
     }
     document.getElementById("logView").classList.add("hidden");
     document.getElementById("summaryView").classList.remove("hidden");
   }
-  function backToLog() {
-    document.getElementById("summaryView").classList.add("hidden");
-    document.getElementById("logView").classList.remove("hidden");
-  }
+  function backToLog(){ document.getElementById("summaryView").classList.add("hidden"); document.getElementById("logView").classList.remove("hidden"); }
 
-  function summaryText() {
-    var lines = ["SmashZilla - Cash Takings", new Date().toLocaleString(), ""];
-    MENU.forEach(function(m){ var q=qty(m.id); if(q>0) lines.push(m.name+"  x"+q+"  =  $"+(q*m.price).toFixed(2)); });
-    lines.push(""); lines.push("Items: "+log.length); lines.push("CASH TOTAL: $"+total().toFixed(2));
+  function summaryText(){
+    var allItems=[]; state.orders.forEach(function(o){ allItems=allItems.concat(o.items); });
+    var rows=aggregate(allItems).sort(function(a,b){ return a.name<b.name?-1:1; });
+    var lines=["SmashZilla - Cash Takings", new Date().toLocaleString(), ""];
+    rows.forEach(function(a){ lines.push(a.name+"  x"+a.qty+"  =  $"+(a.qty*a.price).toFixed(2)); });
+    lines.push(""); lines.push("Orders: "+state.orders.length); lines.push("Items: "+dayItems()); lines.push("CASH TOTAL: $"+dayTotal().toFixed(2));
     return lines.join("\n");
   }
-  function copySummary() {
-    var t = summaryText();
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(t).then(function(){ flash(); }, function(){ legacyCopy(t); });
-    } else { legacyCopy(t); }
+  function copySummary(){
+    var t=summaryText();
+    if(navigator.clipboard){ navigator.clipboard.writeText(t).then(function(){toast("Copied!");},function(){legacy(t);}); } else legacy(t);
   }
-  function legacyCopy(t){
-    var ta=document.createElement("textarea"); ta.value=t; document.body.appendChild(ta);
-    ta.select(); try{document.execCommand("copy");}catch(e){} document.body.removeChild(ta); flash();
-  }
-  function flash(){
-    var b=document.getElementById("copyBtn"); var o=b.textContent;
-    b.textContent="Copied!"; setTimeout(function(){b.textContent=o;},1800);
+  function legacy(t){ var ta=document.createElement("textarea"); ta.value=t; document.body.appendChild(ta); ta.select(); try{document.execCommand("copy");}catch(e){} document.body.removeChild(ta); toast("Copied!"); }
+
+  function pushAll(){
+    if(!sheetUrl){ toast("Add Sheets link first"); openSettings(); return; }
+    if(state.orders.length===0){ toast("No orders yet"); return; }
+    postOrders(state.orders.map(orderPayload));
+    toast("Pushed "+state.orders.length+" orders");
   }
 
-  function openModal(){
-    document.getElementById("modalText").textContent =
-      "This clears the current tally ($"+total().toFixed(2)+", "+log.length+" items). Copy your summary first if you need it.";
-    document.getElementById("modal").classList.add("show");
-  }
-  function closeModal(){ document.getElementById("modal").classList.remove("show"); }
-  function doReset(){ log=[]; save(); render(); closeModal(); backToLog(); }
+  // modals
+  function openReset(){ document.getElementById("modalText").textContent="This clears today's orders ("+state.orders.length+" orders, $"+dayTotal().toFixed(2)+"). Copy or push to Sheets first if needed."; document.getElementById("modal").classList.add("show"); }
+  function closeReset(){ document.getElementById("modal").classList.remove("show"); }
+  function doReset(){ state.orders=[]; state.cart=[]; state.counter=0; save(); render(); closeReset(); backToLog(); }
+  function openSettings(){ document.getElementById("urlInput").value=sheetUrl; document.getElementById("connStatus").textContent = sheetUrl?"Status: connected":"Status: not connected"; document.getElementById("connStatus").style.color = sheetUrl?"#22c55e":"#71717a"; document.getElementById("settings").classList.add("show"); }
+  function closeSettings(){ document.getElementById("settings").classList.remove("show"); }
+  function saveSettings(){ sheetUrl=document.getElementById("urlInput").value.trim(); try{localStorage.setItem(URLKEY,sheetUrl);}catch(e){} closeSettings(); toast(sheetUrl?"Sheets connected":"Sheets cleared"); }
 
-  document.getElementById("undoBtn").onclick = undo;
-  document.getElementById("summaryBtn").onclick = showSummary;
-  document.getElementById("resetBtn").onclick = openModal;
-  document.getElementById("copyBtn").onclick = copySummary;
-  document.getElementById("backBtn").onclick = backToLog;
-  document.getElementById("keepBtn").onclick = closeModal;
-  document.getElementById("clearBtn").onclick = doReset;
+  var toastT;
+  function toast(msg){ var t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(function(){t.classList.remove("show");},1600); }
+
+  document.getElementById("undoBtn").onclick=undo;
+  document.getElementById("finishBtn").onclick=finish;
+  document.getElementById("segStd").onclick=function(){ comboMode=false; render(); };
+  document.getElementById("segCombo").onclick=function(){ comboMode=true; render(); };
+  document.getElementById("summaryBtn").onclick=showSummary;
+  document.getElementById("resetBtn").onclick=openReset;
+  document.getElementById("copyBtn").onclick=copySummary;
+  document.getElementById("pushBtn").onclick=pushAll;
+  document.getElementById("backBtn").onclick=backToLog;
+  document.getElementById("keepBtn").onclick=closeReset;
+  document.getElementById("clearBtn").onclick=doReset;
+  document.getElementById("gearBtn").onclick=openSettings;
+  document.getElementById("settingsCancel").onclick=closeSettings;
+  document.getElementById("settingsSave").onclick=saveSettings;
 
   load(); render();
 </script>
