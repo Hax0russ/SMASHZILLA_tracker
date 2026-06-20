@@ -260,7 +260,7 @@
   function finish(){
     if(state.cart.length===0) return;
     state.counter++;
-    var order = { order:state.counter, time:Date.now(), items:state.cart.slice(), total:cartTotal() };
+    var order = { order:state.counter, time:Date.now(), items:state.cart.slice(), total:cartTotal(), sent:false };
     state.orders.push(order);
     state.cart = [];
     document.getElementById("changeBox").classList.remove("show");
@@ -268,7 +268,7 @@
     document.getElementById("changeResult").innerHTML="";
     save(); render();
     toast("Order #"+order.order+" banked");
-    postOrders([orderPayload(order)]);
+    if(sheetUrl){ order.sent=true; save(); postOrders([orderPayload(order)]); }
   }
 
   function itemsString(items){
@@ -317,9 +317,12 @@
 
   function pushAll(){
     if(!sheetUrl){ toast("Add Sheets link first"); openSettings(); return; }
-    if(state.orders.length===0){ toast("No orders yet"); return; }
-    postOrders(state.orders.map(orderPayload));
-    toast("Pushed "+state.orders.length+" orders");
+    var unsent = state.orders.filter(function(o){ return !o.sent; });
+    if(unsent.length===0){ toast("All orders already sent"); return; }
+    unsent.forEach(function(o){ o.sent=true; });
+    save();
+    postOrders(unsent.map(orderPayload));
+    toast("Pushed "+unsent.length+" order"+(unsent.length===1?"":"s"));
   }
 
   // modals
