@@ -184,12 +184,13 @@
   var URLKEY = "smashzilla-sheet-url";
   var state = { orders:[], cart:[], counter:0 };
   var comboMode = false;
+  var DEFAULT_SHEET_URL = "https://script.google.com/macros/s/AKfycbwez1tsZIdUgVZZUgh1yMYGxHMOEe9yklPagSnNHwd494ZYYD-IuEV8xve6yQ-foKQk/exec";
   var sheetUrl = "";
 
   function load() {
     try { var r = localStorage.getItem(KEY); if (r) { var p=JSON.parse(r);
       if(p.orders) state.orders=p.orders; if(p.cart) state.cart=p.cart; if(p.counter) state.counter=p.counter; } } catch(e){}
-    try { sheetUrl = localStorage.getItem(URLKEY) || ""; } catch(e){}
+    try { sheetUrl = localStorage.getItem(URLKEY) || DEFAULT_SHEET_URL; } catch(e){ sheetUrl = DEFAULT_SHEET_URL; }
   }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
 
